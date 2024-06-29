@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Layouts</string>
     <string name="title_activity_detailed">DetailedActivity</string>
+    <string name="title_activity_navigation_controller">NavigationController</string>
 </resources>

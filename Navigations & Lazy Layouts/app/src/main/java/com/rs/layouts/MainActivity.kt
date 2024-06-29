@@ -6,17 +6,22 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -47,64 +52,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LayoutsTheme {
-                    MainScreen()
+                MainScreen()
             }
         }
-    }
-}
-
-@Composable
-fun NavigationBar(navController: NavController) {
-    NavigationBar(
-        modifier = Modifier,
-        containerColor = MaterialTheme.colorScheme.surfaceVariant
-    ) {
-        NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("left_screen") },
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_left),
-                    contentDescription = "Left"
-                )
-            },
-            label = {
-                Text(text = "Left Screen")
-            }
-        )
-        NavigationBarItem(
-            selected = true,
-            onClick = { navController.navigate("home_screen") },
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_home),
-                    contentDescription = "home"
-                )
-            },
-            label = {
-                Text(text = "Home Screen")
-            })
-        NavigationBarItem(
-            selected = false,
-            onClick = { navController.navigate("right_screen") },
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_right),
-                    contentDescription = "right"
-                )
-            },
-            label = {
-                Text(text = "Right Screen")
-            })
-    }
-}
-
-@Composable
-fun NavigationHost(navController: NavController) {
-    NavHost(navController = navController as NavHostController, startDestination = "home_screen") {
-        composable("left_screen") { leftScreen() }
-        composable("home_screen") { homeScreen() }
-        composable("right_screen") { rightScreen() }
     }
 }
 
@@ -113,57 +63,42 @@ fun leftScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Yellow), contentAlignment = Alignment.Center
+            .background(Color.White), contentAlignment = Alignment.Center
     ) {
-        Text(text = "Left Screen")
+        Text(text = "Left Screen", color = Color.Black)
     }
 }
 
 @Composable
-fun homeScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(20) { item ->
-                GridItem(item)
-            }
-        }
-    }
-}
-
-@Composable
-fun GridItem(index: Int) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Surface(
-            modifier = Modifier.size(100.dp),
-            color = Color.LightGray,
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.android_alien),
-                        contentDescription = "Alien",
-                        modifier = Modifier.size(60.dp)
-                    )
+fun homeScreen(navController: NavController) {
+    val list: List<String> = listOf(
+        "Lazy Vertical Grids",
+        "Lazy Horizontal Grids",
+        "Lazy Columns",
+        "Lazy Rows",
+        "Columns",
+        "Rows"
+    )
+    Box(modifier = Modifier.fillMaxSize().padding(10.dp)) {
+        LazyColumn( modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp) ) {
+            items(list) { item: String ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                ){
                     Text(
-                        text = "Item $index",
-                        fontSize = 10.sp,
+                        text = item,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate(item)
+                            }
+                            .padding(16.dp),
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.fillMaxSize().padding(vertical = 10.dp),
-                        textAlign = TextAlign.Center
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
@@ -176,9 +111,9 @@ fun rightScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Magenta), contentAlignment = Alignment.Center
+            .background(Color.White), contentAlignment = Alignment.Center
     ) {
-        Text(text = "Right Screen")
+        Text(text = "Right Screen", color = Color.Black)
     }
 }
 
@@ -195,7 +130,5 @@ fun MainScreen() {
 @Preview()
 @Composable
 fun prevScreen(showBackground: Boolean = true) {
-    //NavigationBar()
-    //leftScreen()
     MainScreen()
 }
