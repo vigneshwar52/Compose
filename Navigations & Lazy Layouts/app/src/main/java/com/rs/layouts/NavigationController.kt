@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.rs.layouts.ui.theme.LayoutsTheme
 
 class NavigationController : ComponentActivity() {
@@ -37,6 +38,7 @@ class NavigationController : ComponentActivity() {
 @Composable
 fun NavigationHost(navController: NavController) {
     NavHost(navController = navController as NavHostController, startDestination = "home_screen") {
+        composable("mainScreen") { MainScreen()}
         composable("left_screen") { leftScreen() }
         composable("home_screen") { homeScreen(navController) }
         composable("right_screen") { rightScreen() }
@@ -46,7 +48,6 @@ fun NavigationHost(navController: NavController) {
         composable("Lazy Rows"){ lazyRows() }
         composable("Columns"){ columns() }
         composable("Rows"){ rows() }
-
     }
 }
 
