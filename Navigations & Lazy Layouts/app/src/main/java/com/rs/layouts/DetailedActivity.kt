@@ -68,7 +68,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun lazyVerticalGrid() {
+fun LazyVerticalGrid() {
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.surfaceVariant)) {
@@ -86,7 +86,7 @@ fun lazyVerticalGrid() {
     }
 }
 @Composable
-fun lazyHorizontalGrid(){
+fun LazyHorizontalGrid(){
     val rowList:List<String> = listOf(
         "Apple", "Orange", "Banana", "Pineapple", "Jackfruit", "Woodapple", "Mango", "Papaya",
         "Grapes", "Watermelon", "Lychee", "Peach", "Pear", "Plum", "Cherry", "Strawberry",
@@ -154,7 +154,7 @@ fun GridItem(index: String) {
     }
 }
 @Composable
-fun lazyColumns(){
+fun LazyColumns(){
     var str:String?= null
     Box(modifier = Modifier.fillMaxSize()){
         LazyColumn{
@@ -192,7 +192,7 @@ fun lazyColumns(){
     }
 }
 @Composable
-fun lazyRows(){
+fun LazyRows(){
     var str:String?= null
     Box(modifier = Modifier.fillMaxSize()){
         LazyRow{
@@ -228,7 +228,7 @@ fun lazyRows(){
     }
 }
 @Composable
-fun columns(){
+fun Columns(){
     Column(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.jetpack_compose),
@@ -252,7 +252,7 @@ fun columns(){
 }
 
 @Composable
-fun rows(){
+fun Rows(){
     Row(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.jetpack_compose),
@@ -278,9 +278,9 @@ fun rows(){
 @Composable
 fun GreetingPreview() {
     LayoutsTheme {
-        lazyVerticalGrid();
-//        lazyHorizontalGrid()
-//        lazyColumns()
-//        rows()
+        LazyVerticalGrid();
+//        LazyHorizontalGrid()
+//        LazyColumns()
+//        Rows()
     }
 }

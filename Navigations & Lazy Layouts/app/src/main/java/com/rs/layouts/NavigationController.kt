@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.rs.layouts.ui.theme.LayoutsTheme
 
 class NavigationController : ComponentActivity() {
@@ -31,20 +31,18 @@ class NavigationController : ComponentActivity() {
 }
 
 @Composable
-fun NavigationHost() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "splash_screen") {
-        composable("splash_screen"){ SplashScreen(navController = navController)}
-        composable("main_screen") { MainScreen(navController)}
+fun NavigationHost(navController: NavController) {
+    NavHost(navController = navController as NavHostController, startDestination = "home_screen") {
+        composable("main_screen") { MainScreen()}
         composable("left_screen") { LeftScreen() }
         composable("home_screen") { HomeScreen(navController) }
         composable("right_screen") { RightScreen() }
-        composable("Lazy Vertical Grids"){lazyVerticalGrid()}
-        composable("Lazy Horizontal Grids"){lazyHorizontalGrid()}
-        composable("Lazy Columns"){lazyColumns()}
-        composable("Lazy Rows"){ lazyRows() }
-        composable("Columns"){ columns() }
-        composable("Rows"){ rows() }
+        composable("Lazy Vertical Grids"){LazyVerticalGrid()}
+        composable("Lazy Horizontal Grids"){LazyHorizontalGrid()}
+        composable("Lazy Columns"){LazyColumns()}
+        composable("Lazy Rows"){ LazyRows() }
+        composable("Columns"){ Columns() }
+        composable("Rows"){ Rows() }
     }
 }
 

@@ -24,7 +24,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.rs.layouts.ui.theme.LayoutsTheme
 import kotlinx.coroutines.delay
 
@@ -42,7 +46,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LayoutsTheme {
-                NavigationHost()
+                AppScreen()
             }
         }
     }
@@ -114,8 +118,33 @@ fun RightScreen() {
 }
 
 @Composable
-fun SplashScreen(navController: NavController) {
-    var scale = remember {
+fun SplashScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.jetpack_compose),
+            contentDescription = "logo"
+        )
+    }
+}
+
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(bottomBar = { NavigationBar(navController) }) {
+        innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            NavigationHost(navController)
+        }
+    }
+}
+
+@Composable
+fun AppScreen(){
+    var showSplashScreen by remember { mutableStateOf(true) }
+    val scale = remember {
         Animatable(0f)
     }
     LaunchedEffect(key1 = true) {
@@ -129,32 +158,18 @@ fun SplashScreen(navController: NavController) {
             )
         )
         delay(3000L)
-        navController.navigate("main_screen") {
-            popUpTo("splash_screen") { inclusive = true }
-        }
+        showSplashScreen = false
     }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.jetpack_compose),
-            contentDescription = "logo"
-        )
+
+    if (showSplashScreen) {
+        SplashScreen()
+    } else {
+        MainScreen()
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun MainScreen(navController: NavController) {
-    Scaffold(bottomBar = { NavigationBar(navController) }) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
-            HomeScreen(navController)
-        }
-    }
-}
-
-@Preview()
-@Composable
-fun prevScreen(showBackground: Boolean = true) {
-    NavigationHost()
+fun PrevScreen() {
+   MainScreen()
 }
