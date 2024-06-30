@@ -24,7 +24,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -280,7 +279,7 @@ fun rows(){
 fun GreetingPreview() {
     LayoutsTheme {
         lazyVerticalGrid();
-        //lazyHorizontalGrid()
+//        lazyHorizontalGrid()
 //        lazyColumns()
 //        rows()
     }

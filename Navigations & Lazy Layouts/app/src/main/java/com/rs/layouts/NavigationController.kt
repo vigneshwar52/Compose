@@ -4,20 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -36,12 +31,14 @@ class NavigationController : ComponentActivity() {
 }
 
 @Composable
-fun NavigationHost(navController: NavController) {
-    NavHost(navController = navController as NavHostController, startDestination = "home_screen") {
-        composable("mainScreen") { MainScreen()}
-        composable("left_screen") { leftScreen() }
-        composable("home_screen") { homeScreen(navController) }
-        composable("right_screen") { rightScreen() }
+fun NavigationHost() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "splash_screen") {
+        composable("splash_screen"){ SplashScreen(navController = navController)}
+        composable("main_screen") { MainScreen(navController)}
+        composable("left_screen") { LeftScreen() }
+        composable("home_screen") { HomeScreen(navController) }
+        composable("right_screen") { RightScreen() }
         composable("Lazy Vertical Grids"){lazyVerticalGrid()}
         composable("Lazy Horizontal Grids"){lazyHorizontalGrid()}
         composable("Lazy Columns"){lazyColumns()}
